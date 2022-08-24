@@ -5,8 +5,6 @@ type ListNode struct {
 	Next *ListNode
 }
 
-type Node = ListNode
-
 func detectCycle(head *ListNode) *ListNode {
 	// 双指针
 	fast := head
