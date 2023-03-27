@@ -27,3 +27,26 @@ func isValid(s string) bool {
 	}
 	return len(temp) == 0
 }
+
+func isValid2(s string) bool {
+	mp := map[byte]byte{
+		'(': ')',
+		'{': '}',
+		'[': ']',
+	}
+
+	stack := make([]byte, 0)
+	for i, _ := range s {
+		if len(stack) > 0 {
+			x := stack[len(stack)-1]
+			if mp[x] == s[i] {
+				stack = stack[:len(stack)-1] //出栈
+			} else {
+				stack = append(stack, s[i])
+			}
+		} else {
+			stack = append(stack, s[i])
+		}
+	}
+	return len(stack) == 0
+}

@@ -1,6 +1,8 @@
 package main
 
-import "leetcode/lc/util"
+import (
+	"leetcode/lc/util"
+)
 
 type TreeNode = util.TreeNode
 

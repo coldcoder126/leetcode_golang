@@ -6,9 +6,9 @@ import (
 )
 
 func main() {
-	nums := [...]int{14, 1, 1, 1}
+	nums := [...]int{1, 4, 4}
 	n2 := nums[:]
-	res := myMinSubArrayLen(7, n2)
+	res := minSubArrayLen2(4, n2)
 	fmt.Println(res)
 }
 func minSubArrayLen(target int, nums []int) int {
@@ -59,4 +59,28 @@ func Min(x, y int) int {
 		return x
 	}
 	return y
+}
+
+// 窗口范围curSum = [left,right]，right处表示已累加，left处前一个已减去
+func minSubArrayLen2(target int, nums []int) int {
+	left, right := 0, 0
+	minLen := len(nums)
+	curSum := 0
+
+	for ; right < len(nums); right++ {
+		curSum += nums[right]
+		if curSum >= target {
+			minLen = Min(minLen, right-left+1)
+			for left < right && curSum-nums[left] >= target {
+				curSum = curSum - nums[left]
+				left++ //此处表示left处前一个已减去
+				minLen = Min(minLen, right-left+1)
+			}
+		}
+	}
+	if curSum >= target {
+		return minLen
+	} else {
+		return 0
+	}
 }

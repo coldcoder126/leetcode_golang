@@ -31,7 +31,7 @@ func findTargetSumWays(nums []int, target int) int {
 	for i := 0; i < len(nums); i++ {
 		for j := neg; j >= nums[i]; j-- {
 			if dp[j-nums[i]] > 0 {
-				dp[j] += 1
+				dp[j] += dp[j-nums[i]]
 			}
 		}
 	}
