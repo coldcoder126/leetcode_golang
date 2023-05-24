@@ -29,3 +29,17 @@ func hasPathSum(root *TreeNode, targetSum int) bool {
 	dfs(root)
 	return flag
 }
+
+func hasPathSum2(root *TreeNode, targetSum int) bool {
+	if root == nil {
+		return false
+	}
+	if root != nil {
+		if root.Left == nil && root.Right == nil && root.Val == targetSum {
+			return true
+		} else {
+			return hasPathSum2(root.Left, targetSum-root.Val) || hasPathSum2(root.Right, targetSum-root.Val)
+		}
+	}
+	return false
+}

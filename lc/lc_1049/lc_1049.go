@@ -1,6 +1,11 @@
 package main
 
+import "fmt"
+
 func main() {
+	arr := []int{31, 26, 33, 21, 40}
+	res := lastStoneWeightII(arr)
+	fmt.Println(res)
 
 }
 
@@ -12,24 +17,22 @@ func lastStoneWeightII(stones []int) int {
 	}
 
 	target := sum / 2
+	//dp[i]的含义是容量为i的背包可以装的最大值
+	dp := make([]int, target+1)
 
-	dp := make([]bool, target+1)
-	dp[0] = true
-	// i是石头，j是目标
 	for i := 0; i < len(stones); i++ {
 		for j := target; j >= stones[i]; j-- {
-			if dp[j-stones[i]] {
-				dp[j] = true
-			}
+			dp[j] = max(dp[j], dp[j-stones[i]]+stones[i])
 		}
 	}
-	if dp[target] && sum%2 == 0 {
-		return 0
+	//sum可能为奇数也可能为偶数，但是不管哪个都是 (sum-dp[target])-dp[target]
+	return sum - 2*dp[target]
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	} else {
+		return b
 	}
-	for i := target; i > 0; i-- {
-		if dp[i] {
-			return sum - i*2
-		}
-	}
-	return stones[0]
 }

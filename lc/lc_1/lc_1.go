@@ -4,9 +4,12 @@ import "fmt"
 
 func main() {
 	nums := []int{2, 7, 11, 15}
-	target := 9
-	result := twoSum(nums, target)
-	fmt.Println(result)
+	//target := 9
+	//result := twoSum(nums, target)
+	//fmt.Println(result)
+	for idx, val := range nums {
+		fmt.Println(idx, val)
+	}
 }
 
 // 两遍遍历

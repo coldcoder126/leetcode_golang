@@ -23,3 +23,21 @@ func isSymmetric(root *TreeNode) bool {
 	}
 	return compareSub(root.Left, root.Right)
 }
+
+func isSymmetric2(root *TreeNode) bool {
+	if root == nil {
+		return true
+	} else {
+		return compareSub(root.Left, root.Right)
+	}
+}
+
+func compareSub(left, right *TreeNode) bool {
+	if left == nil && right == nil {
+		return true
+	} else if left != nil && right != nil && left.Val == right.Val {
+		return compareSub(left.Left, right.Right) && compareSub(left.Right, right.Left)
+	} else {
+		return false
+	}
+}

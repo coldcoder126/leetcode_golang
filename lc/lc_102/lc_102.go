@@ -9,12 +9,18 @@ import (
 type TreeNode = util.TreeNode
 
 func main() {
-	arr := make([][]int, 0)
-	arr1 := []int{1}
-	arr2 := []int{4, 5}
-	arr = append(arr, arr1)
-	arr = append(arr, arr2)
-	//copy(arr1, arr2)
+	//arr := make([][]int, 0)
+	//arr1 := []int{1}
+	//arr2 := []int{4, 5}
+	//arr = append(arr, arr1)
+	//arr = append(arr, arr2)
+	////copy(arr1, arr2)
+	//fmt.Println(arr)
+
+	arr := []int{3, 4, 5, 6}
+	for i, v := range arr {
+		fmt.Println(i, v)
+	}
 	fmt.Println(arr)
 
 }
@@ -68,6 +74,31 @@ func levelOrder2(root *TreeNode) [][]int {
 		}
 		res = append(res, tmpArr) //放入结果集
 		tmpArr = []int{}          //清空层的数据
+	}
+	return res
+}
+
+func levelOrder3(root *TreeNode) [][]int {
+	res := make([][]int, 0)
+	que1 := make([]*TreeNode, 0)
+	que2 := make([]*TreeNode, 0)
+
+	que1 = append(que1, root)
+
+	for len(que1) > 0 {
+		temp := make([]int, 0)
+		for _, node := range que1 {
+			temp = append(temp, node.Val)
+			if node.Left != nil {
+				que2 = append(que2, node.Left)
+			}
+			if node.Right != nil {
+				que2 = append(que2, node.Right)
+			}
+		}
+		que1, que2 = que2, que1
+		que2 = que2[:0]
+		res = append(res, temp)
 	}
 	return res
 }
