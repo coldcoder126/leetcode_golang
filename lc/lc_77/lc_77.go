@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 var res [][]int
 var temp []int
 
@@ -9,24 +7,25 @@ func main() {
 	combine(4, 2)
 }
 func combine(n int, k int) [][]int {
-	dfs(1, n, k)
-	fmt.Println(res)
-	return res
-}
+	ans := make([][]int, 0)
+	arr := make([]int, 0)
+	var dfs func(begin int)
+	dfs = func(begin int) {
+		//终止条件
+		if len(arr) == k {
+			t := make([]int, k)
+			copy(t, arr)
+			ans = append(ans, t)
+			return
+		}
 
-// start 开始的位置， deep 深度 ， k 给的深度
-func dfs(start, n, k int) {
-	if len(temp) == k {
-		t := make([]int, k)
-		copy(t, temp)
-		//copy(t, temp)
-		res = append(res, t)
-		return
+		for i := begin; i <= n; i++ {
+			arr = append(arr, i)
+			dfs(i + 1)
+			arr = arr[:len(arr)-1]
+		}
 	}
-	//temp = append(temp, start)
-	for i := start; i <= n; i++ {
-		temp = append(temp, i)
-		dfs(i+1, n, k)
-		temp = temp[:len(temp)-1]
-	}
+	dfs(1)
+	return ans
+
 }

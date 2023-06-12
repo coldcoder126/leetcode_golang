@@ -30,3 +30,26 @@ func combinationSum3(k int, n int) [][]int {
 	dfs(n, 1)
 	return res
 }
+
+func combinationSum3_(k int, n int) [][]int {
+	res := make([][]int, 0)
+	ans := make([]int, 0)
+	var dfs func(target, cur int)
+	dfs = func(target, cur int) {
+		if target == 0 && len(ans) == k {
+			temp := make([]int, len(ans))
+			copy(temp, ans)
+			res = append(res, temp)
+		}
+		for i := cur; i <= 9; i++ {
+			if len(ans) < k && target >= i {
+				ans = append(ans, i)
+				dfs(target-i, i+1)
+				ans = ans[:len(ans)-1]
+			} else {
+				return
+			}
+		}
+	}
+	dfs(n)
+}

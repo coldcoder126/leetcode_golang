@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	ans := reverseWords("this is  my   name")
+	ans := reverseWords2("this is  my   name")
 	fmt.Println(ans)
 }
 
@@ -50,4 +50,50 @@ func reverse(b *[]byte, left, right int) {
 		left++
 		right--
 	}
+}
+
+func reverseWords2(s string) string {
+	b := []byte(s)
+	l1, l2 := 0, len(b)-1
+	//去除头部空格
+	for b[l1] == ' ' {
+		l1++
+	}
+	//去除尾部空格
+	for l2 == ' ' {
+		l2--
+	}
+	//更新数组
+	b = b[l1 : l2+1]
+
+	//删除中间多余空格
+	l1, l2 = 0, 0
+	for l2 < len(b)-1 {
+		l1++
+		l2++
+		for l2 > 0 && b[l2] == b[l2-1] && b[l2] == ' ' {
+			l2++
+		}
+		b[l1] = b[l2]
+	}
+	b = b[:l1+1]
+
+	//将字符串反转
+	l1, l2 = 0, len(b)-1
+	reverse(&b, l1, l2)
+
+	//再将每个单词反转
+	l1, l2 = 0, 0
+	for i := 0; i < len(b); i++ {
+		if b[i] == ' ' {
+			l2 = i - 1
+			reverse(&b, l1, l2)
+			l1 = i + 1
+		} else if i == len(b)-1 {
+			l2 = i
+			reverse(&b, l1, l2)
+		}
+	}
+
+	return string(b)
 }
